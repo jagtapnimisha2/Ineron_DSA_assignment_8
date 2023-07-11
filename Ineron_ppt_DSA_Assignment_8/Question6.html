@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function findAnagrams(s, p) {
+  const result = [];
+  const targetMap = createFrequencyMap(p);
+  const windowMap = createFrequencyMap(s.slice(0, p.length));
+  if (compareMaps(targetMap, windowMap))
+    result.push(0);
+  for (let i = p.length; i < s.length; i++) {
+    const outgoingChar = s[i - p.length];
+    const incomingChar = s[i];
+    windowMap[outgoingChar]--;
+    windowMap[incomingChar] = (windowMap[incomingChar] || 0) + 1;
+    if (compareMaps(targetMap, windowMap))
+      result.push(i - p.length + 1);
+  }
+
+  return result;
+}
+
+function createFrequencyMap(str) {
+  const map = {};
+
+  for (let char of str) {
+    map[char] = (map[char] || 0) + 1;
+  }
+
+  return map;
+}
+
+function compareMaps(map1, map2) {
+  for (let key in map1) {
+    if (map1[key] !== map2[key])
+      return false;
+  }
+  
+  return true;
+}
+const s = "cbaebabacd";
+const p = "abc";
+const indices = findAnagrams(s, p);
+document.write("The ans. is a "+indices);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function decodeString(s) {
+  const stack = [];
+  
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    
+    if (char === ']') {
+      let decodedStr = '';
+      while (stack.length > 0 && stack[stack.length - 1] !== '[') {
+        decodedStr = stack.pop() + decodedStr;
+      }
+      stack.pop();
+      
+      let count = '';
+      while (stack.length > 0 && isDigit(stack[stack.length - 1])) {
+        count = stack.pop() + count;
+      }
+      
+      count = parseInt(count);
+      for (let j = 0; j < count; j++) {
+        stack.push(decodedStr);
+      }
+    } else {
+      stack.push(char);
+    }
+  }
+  
+  return stack.join('');
+}
+
+function isDigit(char) {
+  return /^\d$/.test(char);
+}
+const s = "3[a]2[bc]";
+const decodedString = decodeString(s);
+document.write("The ans. is a "+decodedString);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function isValid(s) {
+  const stack = [];
+
+  for (const char of s) {
+    if (char === '(') {
+      stack.push(char);
+    } else if (char === ')') {
+      if (stack.length > 0) {
+        stack.pop();
+      } else if (stack.includes('*')) {
+        stack.splice(stack.lastIndexOf('*'), 1);
+      } else {
+        return false;
+      }
+    } else if (char === '*') {
+      stack.push(char);
+    }
+  }
+
+  while (stack.length > 0 && stack.includes('*')) {
+    const index = stack.lastIndexOf('*');
+    stack.splice(index, 1);
+    stack.pop();
+  }
+
+  return stack.length === 0;
+}
+
+// Example usage:
+const s = "()";
+document.write("The ans. is a "+isValid(s)); // Output: true
+
+    </script>
+</body>
+</html>

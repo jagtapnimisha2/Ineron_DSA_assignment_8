@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function compress(chars) {
+  let writeIdx = 0;
+  let count = 1;
+
+  for (let readIdx = 0; readIdx < chars.length; readIdx++) {
+    if (readIdx + 1 === chars.length || chars[readIdx] !== chars[readIdx + 1]) {
+      chars[writeIdx++] = chars[readIdx];
+      if (count > 1) {
+        const countStr = count.toString();
+        for (let i = 0; i < countStr.length; i++) {
+          chars[writeIdx++] = countStr[i];
+        }
+      }
+      count = 1;
+    } else {
+      count++;
+    }
+  }
+
+  return writeIdx;
+}
+const chars = ["a", "a", "b", "b", "c", "c", "c"];
+document.write("The ans. is a "+compress(chars));
+
+    </script>
+</body>
+</html>
